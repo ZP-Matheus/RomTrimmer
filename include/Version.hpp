@@ -75,22 +75,18 @@
 #endif
 
 // ==================== ENDIANNESS DETECTION ====================
-#if ROMTRIMMER_HAS_CXX20
-    #include <bit>
-    #if std::endian::native == std::endian::little
-        #define ROMTRIMMER_LITTLE_ENDIAN 1
-        #define ROMTRIMMER_BIG_ENDIAN    0
-    #else
+
+// Default seguro para praticamente todo hardware moderno
+#define ROMTRIMMER_LITTLE_ENDIAN 1
+#define ROMTRIMMER_BIG_ENDIAN    0
+
+// Caso alguém queira ser exótico no futuro
+#if defined(__BYTE_ORDER__) && defined(__ORDER_BIG_ENDIAN__)
+    #if __BYTE_ORDER__ == __ORDER_BIG_ENDIAN__
+        #undef ROMTRIMMER_LITTLE_ENDIAN
+        #undef ROMTRIMMER_BIG_ENDIAN
         #define ROMTRIMMER_LITTLE_ENDIAN 0
         #define ROMTRIMMER_BIG_ENDIAN    1
-    #endif
-#else
-    // Conservative fallback
-    #if defined(_WIN32)
-        #define ROMTRIMMER_LITTLE_ENDIAN 1
-        #define ROMTRIMMER_BIG_ENDIAN    0
-    #else
-        #error "Endianness detection requires C++20 or a platform-specific implementation"
     #endif
 #endif
 
