@@ -45,17 +45,19 @@ make install
 
 # Usage Examples
 
-# Analyze a ROM without modifying it
-./romtrimmer++ -i "some_game.gba" --analyze --verbose
+Analyze a ROM without modifying it
 
-# Perform an actual trim with backup
-./romtrimmer++ -i "super_good_game_ds.nds"
+./romtrimmer -i "some_game.gba" --analyze --verbose
 
-# Process an entire folder recursively
-./romtrimmer++ -p "~/roms/gba" -r --dry-run
+Perform an actual trim with backup
 
-# Force trimming even with warnings (use with caution!)
-./romtrimmer++ -i "very_suspicious_rom.gba" --force
+./romtrimmer -i "super_good_game_ds.nds"
 
+Process an entire folder recursively
 
----
+./romtrimmer -p "~/roms/gba" -r --dry-run
+
+ Force trimming even with warnings (use with caution!)
+ 
+./romtrimmer -i "very_suspicious_rom.gba" --force
+
