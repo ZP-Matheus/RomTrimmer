@@ -27,14 +27,6 @@ jobs:
         sudo apt-get install -y build-essential cmake libssl-dev zlib1g-dev
 
     # ======================
-    # Windows deps
-    # ======================
-    - name: Install dependencies (Windows)
-      if: matrix.os == 'windows-latest'
-      run: |
-        choco install zlib -y
-
-    # ======================
     # macOS deps
     # ======================
     - name: Install dependencies (macOS)
