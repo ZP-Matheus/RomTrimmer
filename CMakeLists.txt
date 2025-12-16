@@ -48,7 +48,6 @@ target_link_libraries(romtrimmer
     PRIVATE
         OpenSSL::SSL
         OpenSSL::Crypto
-        ZLIB::ZLIB
 )
 
 if (CMAKE_CXX_COMPILER_ID MATCHES "Clang|GNU")
