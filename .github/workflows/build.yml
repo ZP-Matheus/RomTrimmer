@@ -12,32 +12,32 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
-        
+
     steps:
     - uses: actions/checkout@v4
-    
+
     - name: Install dependencies (Ubuntu)
       if: matrix.os == 'ubuntu-latest'
       run: |
         sudo apt-get update
         sudo apt-get install -y build-essential cmake libssl-dev zlib1g-dev
-    
+
     - name: Configure CMake
       run: |
-        mkdir build
+        mkdir -p build
         cd build
         cmake .. -DCMAKE_BUILD_TYPE=Release
-    
+
     - name: Build
-  run: |
-    cd build
-    cmake --build . --config Release
-    
+      run: |
+        cd build
+        cmake --build . --config Release
+
     - name: Run tests
       run: |
         cd build
         ./tests/romtrimmer_tests
-    
+
     - name: Upload artifact
       uses: actions/upload-artifact@v4
       with:
@@ -48,10 +48,10 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-    
+
     steps:
     - uses: actions/checkout@v4
-    
+
     - name: Create Release
       uses: softprops/action-gh-release@v1
       with:
