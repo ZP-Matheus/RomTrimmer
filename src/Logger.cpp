@@ -1,15 +1,28 @@
 #include "Logger.hpp"
 #include "LocalizationManager.hpp"
 #if defined(_WIN32)
+    #define NOMINMAX
     #include <windows.h>
+    #include <io.h>
 #else
     #include <unistd.h>
 #endif
 #include <cstdio>
 #include <sstream>
+#include <chrono>
+#include <cstdlib>
+#include <algorithm>
+#include <vector>
 #include <iostream>
 #include <iomanip>
 #include <chrono>
+#if defined(_WIN32)
+    #define ISATTY _isatty
+    #define FILENO _fileno
+#else
+    #define ISATTY isatty
+    #define FILENO fileno
+#endif
 
 Logger::Logger() : logLevel(LogLevel::INFO), logToFile(false) {
     // Configurar nível padrão a partir de variável de ambiente
@@ -115,7 +128,7 @@ void Logger::outputToConsole(const std::string& message, LogLevel level) {
     }
     
     // Verificar se é um terminal que suporta cores
-    static bool isTty = (isatty(fileno(stdout)) != 0);
+    static bool isTty = (ISATTY(FILENO(stdout)) != 0);
     
     if (isTty) {
         std::cout << colorCode << message << reset << std::endl;
