@@ -1,4 +1,8 @@
 #include "RomDetector.hpp"
+
+#include <string>
+#include <cstddef>
+#include <cstdint>   // 👈 O CARA QUE TAVA FALTANDO
 #include <cstring>
 
 RomType RomDetector::detect(const std::string& data) {
