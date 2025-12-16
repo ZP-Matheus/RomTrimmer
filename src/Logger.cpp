@@ -7,6 +7,14 @@
 #else
     #include <unistd.h>
 #endif
+#if defined(_WIN32)
+    #define NOMINMAX
+    #include <windows.h>
+
+    // Windows sendo Windows 🙃
+    #undef ERROR
+    #undef WARNING
+#endif
 #include <cstdio>
 #include <sstream>
 #include <chrono>
