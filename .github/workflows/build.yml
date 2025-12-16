@@ -27,18 +27,12 @@ jobs:
         sudo apt-get install -y build-essential cmake libssl-dev zlib1g-dev
 
     # ======================
-    # Windows deps (vcpkg)
+    # Windows deps
     # ======================
-    - name: Setup vcpkg (Windows)
-      if: matrix.os == 'windows-latest'
-      uses: lukka/run-vcpkg@v11
-      with:
-        vcpkgGitCommitId: 2024.10.21
-
     - name: Install dependencies (Windows)
       if: matrix.os == 'windows-latest'
       run: |
-        vcpkg install zlib
+        choco install zlib -y
 
     # ======================
     # macOS deps
@@ -54,7 +48,7 @@ jobs:
     # ======================
     - name: Configure CMake
       run: |
-        cmake -S . -B build -DCMAKE_BUILD_TYPE=Release ${{ matrix.os == 'windows-latest' && format('-DCMAKE_TOOLCHAIN_FILE={0}/scripts/buildsystems/vcpkg.cmake', env.VCPKG_ROOT) || '' }}
+        cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
 
     # ======================
     # Build
