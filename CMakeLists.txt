@@ -43,7 +43,6 @@ target_include_directories(romtrimmer
 )
 
 find_package(OpenSSL REQUIRED)
-find_package(ZLIB REQUIRED)
 
 target_link_libraries(romtrimmer
     PRIVATE
