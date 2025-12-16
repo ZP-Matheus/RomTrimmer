@@ -11,6 +11,8 @@
 #include "LocalizationManager.hpp"
 #include <string>
 #include <stdexcept>
+#include <vector>
+#include <unordered_map>
 
 // ==================== MACRO PRINCIPAL ====================
 /**
