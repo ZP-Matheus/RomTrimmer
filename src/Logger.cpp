@@ -1,6 +1,10 @@
 #include "Logger.hpp"
 #include "LocalizationManager.hpp"
-#include <unistd.h>
+#if defined(_WIN32)
+    #include <windows.h>
+#else
+    #include <unistd.h>
+#endif
 #include <cstdio>
 #include <sstream>
 #include <iostream>
