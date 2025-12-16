@@ -1,8 +1,8 @@
-RomTrimmer++
+# RomTrimmer++
 
 A powerful ROM trimming utility with extra security against aggressive cuts
 
-# Full Description
+Full Description
 
 An advanced CLI utility for trimming GBA, DS, and other system ROMs, safely and intelligently removing end-of-file padding (0xFF or 0x00).
 
