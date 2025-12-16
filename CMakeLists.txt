@@ -77,7 +77,6 @@ target_include_directories(romtrimmer_tests
 target_link_libraries(romtrimmer_tests
     PRIVATE
         OpenSSL::Crypto
-        ZLIB::ZLIB
 )
 
 add_test(NAME basic_tests COMMAND romtrimmer_tests)
