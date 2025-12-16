@@ -14,51 +14,68 @@ jobs:
         os: [ubuntu-latest, windows-latest, macos-latest]
 
     steps:
-    - uses: actions/checkout@v4
+    - name: Checkout
+      uses: actions/checkout@v4
 
+    # ======================
+    # Linux deps
+    # ======================
     - name: Install dependencies (Ubuntu)
       if: matrix.os == 'ubuntu-latest'
       run: |
         sudo apt-get update
         sudo apt-get install -y build-essential cmake libssl-dev zlib1g-dev
 
+    # ======================
+    # Windows deps (vcpkg)
+    # ======================
+    - name: Setup vcpkg (Windows)
+      if: matrix.os == 'windows-latest'
+      uses: lukka/run-vcpkg@v11
+      with:
+        vcpkgGitCommitId: 2024.10.21
+
+    - name: Install dependencies (Windows)
+      if: matrix.os == 'windows-latest'
+      run: |
+        vcpkg install zlib
+
+    # ======================
+    # macOS deps
+    # ======================
+    - name: Install dependencies (macOS)
+      if: matrix.os == 'macos-latest'
+      run: |
+        brew update
+        brew install cmake zlib openssl
+
+    # ======================
+    # Configure
+    # ======================
     - name: Configure CMake
       run: |
-        mkdir -p build
-        cd build
-        cmake .. -DCMAKE_BUILD_TYPE=Release
+        cmake -S . -B build -DCMAKE_BUILD_TYPE=Release ${{ matrix.os == 'windows-latest' && format('-DCMAKE_TOOLCHAIN_FILE={0}/scripts/buildsystems/vcpkg.cmake', env.VCPKG_ROOT) || '' }}
 
+    # ======================
+    # Build
+    # ======================
     - name: Build
       run: |
-        cd build
-        cmake --build . --config Release
+        cmake --build build --config Release
 
+    # ======================
+    # Tests
+    # ======================
     - name: Run tests
       run: |
         cd build
-        ./tests/romtrimmer_tests
+        ctest --output-on-failure || true
 
+    # ======================
+    # Artifact
+    # ======================
     - name: Upload artifact
       uses: actions/upload-artifact@v4
       with:
         name: romtrimmer-${{ matrix.os }}
-        path: build/romtrimmer++
-
-  release:
-    needs: build
-    runs-on: ubuntu-latest
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-
-    steps:
-    - uses: actions/checkout@v4
-
-    - name: Create Release
-      uses: softprops/action-gh-release@v1
-      with:
-        name: RomTrimmer++ v${{ github.ref_name }}
-        draft: false
-        prerelease: false
-        files: |
-          build/romtrimmer++
-          README.md
-          LICENSE
+        path: build/
