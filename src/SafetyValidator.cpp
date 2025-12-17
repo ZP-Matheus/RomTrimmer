@@ -1,178 +1,220 @@
 #include "SafetyValidator.hpp"
+#include "ValidationResult.hpp"
+#include "TrimOptions.hpp"
+#include "Localization.hpp"
+
 #include <algorithm>
+#include <cmath>
+#include <cstring>
+#include <sstream>
+#include <iomanip>
 
-// =====================
-// Validação principal
-// =====================
-ValidationResult SafetyValidator::validate(const std::string& data,
-                                           size_t trimPoint,
-                                           RomType romType,
-                                           const TrimOptions& options) {
-    ValidationResult result;
+// ==================== TAMANHOS ====================
 
-    validateMinimumSize(trimPoint, romType, options, result);
-    validateCutRatio(data, trimPoint, options, result);
-    validateSafetyMargin(trimPoint, options, result);
-    validateRomSpecific(data, trimPoint, romType, result);
-    validateHeaderIntegrity(data, trimPoint, romType, result);
-
-    return result;
+size_t SafetyValidator::getMinSizeForRomType(RomType type) {
+    switch (type) {
+        case RomType::GBA: return MIN_GBA_SIZE;
+        case RomType::NDS: return MIN_NDS_SIZE;
+        case RomType::GB:  return MIN_GB_SIZE;
+        default:           return 1024;
+    }
 }
 
-// =====================
-// Regras gerais
-// =====================
-bool SafetyValidator::validateMinimumSize(size_t trimPoint,
-                                          RomType romType,
-                                          const TrimOptions&,
-                                          ValidationResult& result) {
-    size_t minSize = 0;
+// ==================== GBA ====================
 
-    switch (romType) {
-        case RomType::GBA: minSize = MIN_GBA_SIZE; break;
-        case RomType::NDS: minSize = MIN_NDS_SIZE; break;
-        case RomType::GB:  minSize = MIN_GB_SIZE;  break;
-        default:
-            result.addError("Tipo de ROM desconhecido");
+bool SafetyValidator::validateGba(const std::string& data, size_t trimPoint) {
+    if (trimPoint < 0xA0) return false;
+    if (trimPoint > 32 * 1024 * 1024) return false;
+    return validateGbaInternalRomSize(data, trimPoint);
+}
+
+bool SafetyValidator::validateGbaInternalRomSize(
+    const std::string& data, size_t trimPoint)
+{
+    if (trimPoint % 0x1000 == 0) return true;
+
+    const size_t checkWindow = 1024;
+    size_t end = std::min(data.size(), trimPoint + checkWindow);
+
+    for (size_t i = trimPoint; i < end; ++i) {
+        if (data[i] != '\0' && data[i] != '\xFF') {
+            return false;
+        }
+    }
+    return true;
+}
+
+// ==================== NDS ====================
+
+bool SafetyValidator::validateNds(const std::string& data, size_t trimPoint) {
+    if (data.size() < 512) return false;
+    return validateNdsSectionOffsets(data, trimPoint);
+}
+
+bool SafetyValidator::validateNdsSectionOffsets(
+    const std::string& data, size_t trimPoint)
+{
+    uint32_t arm9Offset = readU32(data, 0x20);
+    uint32_t arm9Size   = readU32(data, 0x2C);
+    uint32_t arm7Offset = readU32(data, 0x30);
+    uint32_t arm7Size   = readU32(data, 0x3C);
+
+    if (trimPoint > arm9Offset && trimPoint < arm9Offset + arm9Size) return false;
+    if (trimPoint > arm7Offset && trimPoint < arm7Offset + arm7Size) return false;
+
+    return (trimPoint % 0x200) == 0;
+}
+
+// ==================== GB ====================
+
+bool SafetyValidator::validateGb(const std::string&, size_t trimPoint) {
+    return validateGbRomSize(trimPoint);
+}
+
+bool SafetyValidator::validateGbRomSize(size_t size) {
+    const size_t validSizes[] = {
+        32768, 65536, 131072, 262144,
+        524288, 1048576, 2097152,
+        4194304, 8388608
+    };
+
+    for (size_t v : validSizes) {
+        if (size == v) return true;
+        if (std::abs((long)size - (long)v) < (long)(v * 0.01))
+            return true;
+    }
+    return false;
+}
+
+// ==================== ESTRUTURAS CONHECIDAS ====================
+
+bool SafetyValidator::validateKnownStructuresInternal(
+    const std::string& data,
+    size_t trimPoint,
+    RomType)
+{
+    static const char* commonStrings[] = {
+        "Nintendo", "GAME BOY", "POKEMON", "SEGA"
+    };
+
+    if (trimPoint > data.size() || trimPoint < 32)
+        return true;
+
+    for (const char* str : commonStrings) {
+        size_t len = std::strlen(str);
+        if (trimPoint < len) continue;
+
+        size_t start = trimPoint - len;
+        if (start + len > data.size()) continue;
+
+        if (std::memcmp(data.data() + start, str, len) == 0)
             return false;
     }
-
-    if (trimPoint < minSize) {
-        result.addError("Tamanho final abaixo do mínimo seguro");
-        return false;
-    }
-
     return true;
 }
 
-bool SafetyValidator::validateCutRatio(const std::string& data,
-                                       size_t trimPoint,
-                                       const TrimOptions& options,
-                                       ValidationResult& result) {
-    double ratio = 1.0 - (double(trimPoint) / double(data.size()));
+// ==================== RISCO ====================
 
-    if (ratio > options.maxCutRatio) {
-        result.addError("Corte excessivo da ROM");
-        return false;
+SafetyValidator::RiskAssessment SafetyValidator::assessRisk(
+    const std::string& data,
+    size_t trimPoint,
+    RomType romType)
+{
+    RiskAssessment r;
+    r.overallRisk = RiskAssessment::RiskLevel::LOW;
+
+    if (data.empty()) {
+        r.overallRisk = RiskAssessment::RiskLevel::CRITICAL;
+        r.riskFactors.push_back("Empty data");
+        return r;
     }
 
-    return true;
-}
+    double cutRatio = 1.0 - (double(trimPoint) / data.size());
+    r.dataLossProbability = std::min(cutRatio * 1.5, 1.0);
 
-bool SafetyValidator::validateSafetyMargin(size_t trimPoint,
-                                           const TrimOptions& options,
-                                           ValidationResult& result) {
-    if (trimPoint < options.safetyMargin) {
-        result.addWarning("Margem de segurança muito pequena");
-    }
-    return true;
-}
-
-// =====================
-// Validações por tipo
-// =====================
-bool SafetyValidator::validateRomSpecific(const std::string& data,
-                                          size_t,
-                                          RomType romType,
-                                          ValidationResult& result) {
-    bool ok = false;
-
-    switch (romType) {
-        case RomType::GBA: ok = validateGbaHeader(data); break;
-        case RomType::NDS: ok = validateNdsHeader(data); break;
-        case RomType::GB:  ok = validateGbHeader(data);  break;
-        default: break;
+    if (cutRatio > 0.5) {
+        r.overallRisk = RiskAssessment::RiskLevel::HIGH;
+        r.riskFactors.push_back("Large cut detected");
     }
 
-    if (!ok) {
-        result.addError("Header da ROM inválido");
+    if (trimPoint < getRecommendedSizeForRomType(romType)) {
+        r.overallRisk =
+            std::max(r.overallRisk, RiskAssessment::RiskLevel::MEDIUM);
+        r.riskFactors.push_back("Below recommended size");
     }
 
-    return ok;
-}
-
-bool SafetyValidator::validateHeaderIntegrity(const std::string& data,
-                                              size_t,
-                                              RomType romType,
-                                              ValidationResult& result) {
-    if (data.size() < 192) {
-        result.addError("ROM pequena demais para conter header válido");
-        return false;
+    if (!validateKnownStructuresInternal(data, trimPoint, romType)) {
+        r.overallRisk = RiskAssessment::RiskLevel::HIGH;
+        r.riskFactors.push_back("Structure conflict detected");
     }
 
-    return validateRomSpecific(data, 0, romType, result);
+    return r;
 }
 
-// =====================
-// Headers
-// =====================
-bool SafetyValidator::validateGbaHeader(const std::string& data) {
-    if (data.size() < 0xA0) return false;
-    return calculateGbaChecksum(data) == uint8_t(data[0xBD]);
-}
+// ==================== UTIL ====================
 
-bool SafetyValidator::validateNdsHeader(const std::string& data) {
-    if (data.size() < 512) return false;
-    return readU32(data, 0x00) != 0;
-}
-
-bool SafetyValidator::validateGbHeader(const std::string& data) {
-    if (data.size() < 0x150) return false;
-    return calculateGbChecksum(data) == uint8_t(data[0x14D]);
-}
-
-// =====================
-// Checksums
-// =====================
-uint8_t SafetyValidator::calculateGbaChecksum(const std::string& data) {
-    uint8_t sum = 0;
-    for (size_t i = 0xA0; i < 0xBD; ++i) {
-        sum -= uint8_t(data[i]);
+size_t SafetyValidator::getRecommendedSizeForRomType(RomType type) {
+    switch (type) {
+        case RomType::GBA: return 8 * 1024 * 1024;
+        case RomType::NDS: return 64 * 1024 * 1024;
+        case RomType::GB:  return 524288;
+        default:           return 8192;
     }
-    return sum - 0x19;
 }
 
-uint8_t SafetyValidator::calculateGbChecksum(const std::string& data) {
-    uint8_t sum = 0;
-    for (size_t i = 0x134; i <= 0x14C; ++i) {
-        sum -= uint8_t(data[i]) - 1;
-    }
-    return sum;
-}
-
-// =====================
-// Utilitário
-// =====================
 uint32_t SafetyValidator::readU32(const std::string& data, size_t offset) {
     if (offset + 4 > data.size()) return 0;
 
-    return uint32_t(uint8_t(data[offset])) |
-           (uint32_t(uint8_t(data[offset + 1])) << 8) |
-           (uint32_t(uint8_t(data[offset + 2])) << 16) |
-           (uint32_t(uint8_t(data[offset + 3])) << 24);
+    return  (uint8_t)data[offset] |
+           ((uint8_t)data[offset + 1] << 8) |
+           ((uint8_t)data[offset + 2] << 16) |
+           ((uint8_t)data[offset + 3] << 24);
 }
 
-// =====================
-// Análise de risco
-// =====================
-SafetyValidator::RiskAssessment
-SafetyValidator::assessRisk(const std::string& data,
-                            size_t trimPoint,
-                            RomType romType) {
-    RiskAssessment risk;
+ValidationResult SafetyValidator::validate(
+    const std::string& data,
+    size_t trimPoint,
+    RomType romType,
+    const TrimOptions& options)
+{
+    ValidationResult result;
 
-    double ratio = 1.0 - (double(trimPoint) / double(data.size()));
-    risk.dataLossProbability = ratio;
+    if (data.empty()) {
+        result.isValid = false;
+        result.message = tr("ROM data is empty");
+        return result;
+    }
 
-    if (ratio < 0.2) risk.overallRisk = RiskAssessment::RiskLevel::LOW;
-    else if (ratio < 0.4) risk.overallRisk = RiskAssessment::RiskLevel::MEDIUM;
-    else if (ratio < 0.6) risk.overallRisk = RiskAssessment::RiskLevel::HIGH;
-    else risk.overallRisk = RiskAssessment::RiskLevel::CRITICAL;
+    if (trimPoint >= data.size()) {
+        result.isValid = false;
+        result.message = tr("Trim point exceeds ROM size");
+        return result;
+    }
 
-    risk.recommendation =
-        (risk.overallRisk == RiskAssessment::RiskLevel::CRITICAL)
-        ? "Não recomendado cortar essa ROM"
-        : "Corte aceitável";
+    bool ok = false;
 
-    return risk;
+    switch (romType) {
+        case RomType::GBA:
+            ok = validateGba(data, trimPoint);
+            break;
+        case RomType::NDS:
+            ok = validateNds(data, trimPoint);
+            break;
+        case RomType::GB:
+            ok = validateGb(data, trimPoint);
+            break;
+        default:
+            result.isValid = false;
+            result.message = tr("Unknown ROM type");
+            return result;
+    }
+
+    if (!ok && !options.force) {
+        result.isValid = false;
+        result.message = tr("Safety validation failed");
+        return result;
+    }
+
+    result.isValid = true;
+    return result;
 }

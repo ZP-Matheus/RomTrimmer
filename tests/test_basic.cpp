@@ -7,6 +7,7 @@
 #include <iostream>
 #include <string>
 #include <cstring>  // Para memcpy
+#include <catch_amalgamated.hpp>
 
 void testRomDetector() {
     RomDetector detector;
@@ -62,17 +63,17 @@ void testSafetyValidator() {
     options.safetyMargin = 65536;
     
     // Testar corte seguro (1.5MB)
-    ValidationResult result = validator.validate(data, 1.5 * 1024 * 1024, 
-                                                RomType::GBA, options);
-    assert(result.isValid == true);
-    
-    // Testar corte inseguro (muito pequeno)
-    result = validator.validate(data, 512 * 1024, RomType::GBA, options);
-    assert(result.isValid == false);
-    
-    std::cout << "✓ SafetyValidator test passed" << std::endl;
-}
+    auto result = validator.validate(
+    data, 1.5 * 1024 * 1024, RomType::GBA, options
+);
 
+REQUIRE(result.isValid);
+auto result2 = validator.validate(
+    data, 512 * 1024, RomType::GBA, options
+);
+
+REQUIRE_FALSE(result.isValid);
+        }
 void testEndToEnd() {
     std::string romData;
     
@@ -100,22 +101,4 @@ void testEndToEnd() {
            analysis.trimPoint == actualData + (4 - actualData % 4));
     
     std::cout << "✓ End-to-end test passed" << std::endl;
-}
-
-int main() {
-    std::cout << "Running RomTrimmer++ tests...\n" << std::endl;
-    
-    try {
-        testRomDetector();
-        testPaddingAnalyzer();
-        testSafetyValidator();
-        testEndToEnd();
-        
-        std::cout << "\n✅ All tests passed!" << std::endl;
-        return 0;
-    }
-    catch (const std::exception& e) {
-        std::cerr << "❌ Test failed: " << e.what() << std::endl;
-        return 1;
-    }
 }

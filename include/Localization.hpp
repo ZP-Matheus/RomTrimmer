@@ -14,6 +14,10 @@
 #include <vector>
 #include <unordered_map>
 
+inline std::string tr(const char* msg) {
+    return msg;
+}
+
 // ==================== MACRO PRINCIPAL ====================
 /**
  * @brief Macro para obter string traduzida

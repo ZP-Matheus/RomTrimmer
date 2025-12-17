@@ -66,6 +66,7 @@ add_executable(romtrimmer_tests
     src/SafetyValidator.cpp
     src/Logger.cpp
     src/LocalizationManager.cpp
+    src/catch_amalgamated.cpp
 )
 
 target_include_directories(romtrimmer_tests
@@ -77,6 +78,8 @@ target_link_libraries(romtrimmer_tests
     PRIVATE
         OpenSSL::Crypto
 )
+
+target_link_libraries(romtrimmer_tests PRIVATE log)
 
 add_test(NAME basic_tests COMMAND romtrimmer_tests)
 
