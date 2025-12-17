@@ -79,7 +79,9 @@ target_link_libraries(romtrimmer_tests
         OpenSSL::Crypto
 )
 
-target_link_libraries(romtrimmer_tests PRIVATE log)
+if(ANDROID)
+    target_link_libraries(romtrimmer_tests PRIVATE log)
+endif()
 
 add_test(NAME basic_tests COMMAND romtrimmer_tests)
 
