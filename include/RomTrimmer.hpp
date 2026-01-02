@@ -155,3 +155,8 @@ private:
     
     
 };
+#ifdef _WIN32
+bool extractWithWindowsAPI(const fs::path& archivePath,
+                           const fs::path& extractPath,
+                           const std::string& type);
+#endif

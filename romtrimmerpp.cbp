@@ -1,0 +1,355 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="romtrimmerpp" />
+		<Option makefile_is_custom="1" />
+		<Option execution_dir="/home/matheussr/RomTrimmer/build/" />
+		<Option compiler="gcc" />
+		<Option virtualFolders="CMake Files/" />
+		<Build>
+			<Target title="all">
+				<Option type="4" />
+				<Option compiler="gcc" />
+				<MakeCommands>
+					<Build command='/usr/bin/gmake -j2 -f &quot;/home/matheussr/RomTrimmer/build/Makefile&quot;  VERBOSE=1 all' />
+					<CompileFile command='/usr/bin/gmake -j2 -f &quot;/home/matheussr/RomTrimmer/build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
+					<Clean command='/usr/bin/gmake -j2 -f &quot;/home/matheussr/RomTrimmer/build/Makefile&quot;  VERBOSE=1 clean' />
+					<DistClean command='/usr/bin/gmake -j2 -f &quot;/home/matheussr/RomTrimmer/build/Makefile&quot;  VERBOSE=1 clean' />
+					<AskRebuildNeeded command="$make -q -f $makefile $target" />
+					<SilentBuild command="$make -f $makefile $target &gt; $(CMD_NULL)" />
+				</MakeCommands>
+			</Target>
+			<Target title="romtrimmer_core">
+				<Option output="/home/matheussr/RomTrimmer/build/libromtrimmer_core.a" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="" />
+				<Option object_output="./" />
+				<Option type="2" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add directory="/home/matheussr/RomTrimmer/include" />
+					<Add directory="/usr/include" />
+					<Add directory="/usr/include/c++/13" />
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/13" />
+					<Add directory="/usr/include/c++/13/backward" />
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/13/include" />
+					<Add directory="/usr/local/include" />
+					<Add directory="/usr/include/x86_64-linux-gnu" />
+				</Compiler>
+				<MakeCommands>
+					<Build command='/usr/bin/gmake -j2 -f &quot;/home/matheussr/RomTrimmer/build/Makefile&quot;  VERBOSE=1 romtrimmer_core' />
+					<CompileFile command='/usr/bin/gmake -j2 -f &quot;/home/matheussr/RomTrimmer/build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
+					<Clean command='/usr/bin/gmake -j2 -f &quot;/home/matheussr/RomTrimmer/build/Makefile&quot;  VERBOSE=1 clean' />
+					<DistClean command='/usr/bin/gmake -j2 -f &quot;/home/matheussr/RomTrimmer/build/Makefile&quot;  VERBOSE=1 clean' />
+					<AskRebuildNeeded command="$make -q -f $makefile $target" />
+					<SilentBuild command="$make -f $makefile $target &gt; $(CMD_NULL)" />
+				</MakeCommands>
+			</Target>
+			<Target title="romtrimmer_core/fast">
+				<Option output="/home/matheussr/RomTrimmer/build/libromtrimmer_core.a" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="" />
+				<Option object_output="./" />
+				<Option type="2" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add directory="/home/matheussr/RomTrimmer/include" />
+					<Add directory="/usr/include" />
+					<Add directory="/usr/include/c++/13" />
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/13" />
+					<Add directory="/usr/include/c++/13/backward" />
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/13/include" />
+					<Add directory="/usr/local/include" />
+					<Add directory="/usr/include/x86_64-linux-gnu" />
+				</Compiler>
+				<MakeCommands>
+					<Build command='/usr/bin/gmake -j2 -f &quot;/home/matheussr/RomTrimmer/build/Makefile&quot;  VERBOSE=1 romtrimmer_core/fast' />
+					<CompileFile command='/usr/bin/gmake -j2 -f &quot;/home/matheussr/RomTrimmer/build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
+					<Clean command='/usr/bin/gmake -j2 -f &quot;/home/matheussr/RomTrimmer/build/Makefile&quot;  VERBOSE=1 clean' />
+					<DistClean command='/usr/bin/gmake -j2 -f &quot;/home/matheussr/RomTrimmer/build/Makefile&quot;  VERBOSE=1 clean' />
+					<AskRebuildNeeded command="$make -q -f $makefile $target" />
+					<SilentBuild command="$make -f $makefile $target &gt; $(CMD_NULL)" />
+				</MakeCommands>
+			</Target>
+			<Target title="romtrimmer++">
+				<Option output="/home/matheussr/RomTrimmer/build/romtrimmer++" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="/home/matheussr/RomTrimmer/build" />
+				<Option object_output="./" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add directory="/home/matheussr/RomTrimmer/include" />
+					<Add directory="/usr/include" />
+					<Add directory="/usr/include/c++/13" />
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/13" />
+					<Add directory="/usr/include/c++/13/backward" />
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/13/include" />
+					<Add directory="/usr/local/include" />
+					<Add directory="/usr/include/x86_64-linux-gnu" />
+				</Compiler>
+				<MakeCommands>
+					<Build command='/usr/bin/gmake -j2 -f &quot;/home/matheussr/RomTrimmer/build/Makefile&quot;  VERBOSE=1 romtrimmer++' />
+					<CompileFile command='/usr/bin/gmake -j2 -f &quot;/home/matheussr/RomTrimmer/build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
+					<Clean command='/usr/bin/gmake -j2 -f &quot;/home/matheussr/RomTrimmer/build/Makefile&quot;  VERBOSE=1 clean' />
+					<DistClean command='/usr/bin/gmake -j2 -f &quot;/home/matheussr/RomTrimmer/build/Makefile&quot;  VERBOSE=1 clean' />
+					<AskRebuildNeeded command="$make -q -f $makefile $target" />
+					<SilentBuild command="$make -f $makefile $target &gt; $(CMD_NULL)" />
+				</MakeCommands>
+			</Target>
+			<Target title="romtrimmer++/fast">
+				<Option output="/home/matheussr/RomTrimmer/build/romtrimmer++" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="/home/matheussr/RomTrimmer/build" />
+				<Option object_output="./" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add directory="/home/matheussr/RomTrimmer/include" />
+					<Add directory="/usr/include" />
+					<Add directory="/usr/include/c++/13" />
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/13" />
+					<Add directory="/usr/include/c++/13/backward" />
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/13/include" />
+					<Add directory="/usr/local/include" />
+					<Add directory="/usr/include/x86_64-linux-gnu" />
+				</Compiler>
+				<MakeCommands>
+					<Build command='/usr/bin/gmake -j2 -f &quot;/home/matheussr/RomTrimmer/build/Makefile&quot;  VERBOSE=1 romtrimmer++/fast' />
+					<CompileFile command='/usr/bin/gmake -j2 -f &quot;/home/matheussr/RomTrimmer/build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
+					<Clean command='/usr/bin/gmake -j2 -f &quot;/home/matheussr/RomTrimmer/build/Makefile&quot;  VERBOSE=1 clean' />
+					<DistClean command='/usr/bin/gmake -j2 -f &quot;/home/matheussr/RomTrimmer/build/Makefile&quot;  VERBOSE=1 clean' />
+					<AskRebuildNeeded command="$make -q -f $makefile $target" />
+					<SilentBuild command="$make -f $makefile $target &gt; $(CMD_NULL)" />
+				</MakeCommands>
+			</Target>
+			<Target title="romtrimmer_c">
+				<Option output="/home/matheussr/RomTrimmer/build/libromtrimmer_c.so" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="/home/matheussr/RomTrimmer/build" />
+				<Option object_output="./" />
+				<Option type="3" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add directory="/home/matheussr/RomTrimmer/include" />
+					<Add directory="/usr/include" />
+					<Add directory="/usr/include/c++/13" />
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/13" />
+					<Add directory="/usr/include/c++/13/backward" />
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/13/include" />
+					<Add directory="/usr/local/include" />
+					<Add directory="/usr/include/x86_64-linux-gnu" />
+				</Compiler>
+				<MakeCommands>
+					<Build command='/usr/bin/gmake -j2 -f &quot;/home/matheussr/RomTrimmer/build/Makefile&quot;  VERBOSE=1 romtrimmer_c' />
+					<CompileFile command='/usr/bin/gmake -j2 -f &quot;/home/matheussr/RomTrimmer/build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
+					<Clean command='/usr/bin/gmake -j2 -f &quot;/home/matheussr/RomTrimmer/build/Makefile&quot;  VERBOSE=1 clean' />
+					<DistClean command='/usr/bin/gmake -j2 -f &quot;/home/matheussr/RomTrimmer/build/Makefile&quot;  VERBOSE=1 clean' />
+					<AskRebuildNeeded command="$make -q -f $makefile $target" />
+					<SilentBuild command="$make -f $makefile $target &gt; $(CMD_NULL)" />
+				</MakeCommands>
+			</Target>
+			<Target title="romtrimmer_c/fast">
+				<Option output="/home/matheussr/RomTrimmer/build/libromtrimmer_c.so" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="/home/matheussr/RomTrimmer/build" />
+				<Option object_output="./" />
+				<Option type="3" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add directory="/home/matheussr/RomTrimmer/include" />
+					<Add directory="/usr/include" />
+					<Add directory="/usr/include/c++/13" />
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/13" />
+					<Add directory="/usr/include/c++/13/backward" />
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/13/include" />
+					<Add directory="/usr/local/include" />
+					<Add directory="/usr/include/x86_64-linux-gnu" />
+				</Compiler>
+				<MakeCommands>
+					<Build command='/usr/bin/gmake -j2 -f &quot;/home/matheussr/RomTrimmer/build/Makefile&quot;  VERBOSE=1 romtrimmer_c/fast' />
+					<CompileFile command='/usr/bin/gmake -j2 -f &quot;/home/matheussr/RomTrimmer/build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
+					<Clean command='/usr/bin/gmake -j2 -f &quot;/home/matheussr/RomTrimmer/build/Makefile&quot;  VERBOSE=1 clean' />
+					<DistClean command='/usr/bin/gmake -j2 -f &quot;/home/matheussr/RomTrimmer/build/Makefile&quot;  VERBOSE=1 clean' />
+					<AskRebuildNeeded command="$make -q -f $makefile $target" />
+					<SilentBuild command="$make -f $makefile $target &gt; $(CMD_NULL)" />
+				</MakeCommands>
+			</Target>
+			<Target title="romtrimmer_tests">
+				<Option output="/home/matheussr/RomTrimmer/build/romtrimmer_tests" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="/home/matheussr/RomTrimmer/build" />
+				<Option object_output="./" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add directory="/home/matheussr/RomTrimmer/include" />
+					<Add directory="/usr/include" />
+					<Add directory="/usr/include/c++/13" />
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/13" />
+					<Add directory="/usr/include/c++/13/backward" />
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/13/include" />
+					<Add directory="/usr/local/include" />
+					<Add directory="/usr/include/x86_64-linux-gnu" />
+				</Compiler>
+				<MakeCommands>
+					<Build command='/usr/bin/gmake -j2 -f &quot;/home/matheussr/RomTrimmer/build/Makefile&quot;  VERBOSE=1 romtrimmer_tests' />
+					<CompileFile command='/usr/bin/gmake -j2 -f &quot;/home/matheussr/RomTrimmer/build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
+					<Clean command='/usr/bin/gmake -j2 -f &quot;/home/matheussr/RomTrimmer/build/Makefile&quot;  VERBOSE=1 clean' />
+					<DistClean command='/usr/bin/gmake -j2 -f &quot;/home/matheussr/RomTrimmer/build/Makefile&quot;  VERBOSE=1 clean' />
+					<AskRebuildNeeded command="$make -q -f $makefile $target" />
+					<SilentBuild command="$make -f $makefile $target &gt; $(CMD_NULL)" />
+				</MakeCommands>
+			</Target>
+			<Target title="romtrimmer_tests/fast">
+				<Option output="/home/matheussr/RomTrimmer/build/romtrimmer_tests" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="/home/matheussr/RomTrimmer/build" />
+				<Option object_output="./" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add directory="/home/matheussr/RomTrimmer/include" />
+					<Add directory="/usr/include" />
+					<Add directory="/usr/include/c++/13" />
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/13" />
+					<Add directory="/usr/include/c++/13/backward" />
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/13/include" />
+					<Add directory="/usr/local/include" />
+					<Add directory="/usr/include/x86_64-linux-gnu" />
+				</Compiler>
+				<MakeCommands>
+					<Build command='/usr/bin/gmake -j2 -f &quot;/home/matheussr/RomTrimmer/build/Makefile&quot;  VERBOSE=1 romtrimmer_tests/fast' />
+					<CompileFile command='/usr/bin/gmake -j2 -f &quot;/home/matheussr/RomTrimmer/build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
+					<Clean command='/usr/bin/gmake -j2 -f &quot;/home/matheussr/RomTrimmer/build/Makefile&quot;  VERBOSE=1 clean' />
+					<DistClean command='/usr/bin/gmake -j2 -f &quot;/home/matheussr/RomTrimmer/build/Makefile&quot;  VERBOSE=1 clean' />
+					<AskRebuildNeeded command="$make -q -f $makefile $target" />
+					<SilentBuild command="$make -f $makefile $target &gt; $(CMD_NULL)" />
+				</MakeCommands>
+			</Target>
+			<Target title="test">
+				<Option type="4" />
+				<Option compiler="gcc" />
+				<MakeCommands>
+					<Build command='/usr/bin/gmake -j2 -f &quot;/home/matheussr/RomTrimmer/build/Makefile&quot;  VERBOSE=1 test' />
+					<CompileFile command='/usr/bin/gmake -j2 -f &quot;/home/matheussr/RomTrimmer/build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
+					<Clean command='/usr/bin/gmake -j2 -f &quot;/home/matheussr/RomTrimmer/build/Makefile&quot;  VERBOSE=1 clean' />
+					<DistClean command='/usr/bin/gmake -j2 -f &quot;/home/matheussr/RomTrimmer/build/Makefile&quot;  VERBOSE=1 clean' />
+					<AskRebuildNeeded command="$make -q -f $makefile $target" />
+					<SilentBuild command="$make -f $makefile $target &gt; $(CMD_NULL)" />
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option type="4" />
+				<Option compiler="gcc" />
+				<MakeCommands>
+					<Build command='/usr/bin/gmake -j2 -f &quot;/home/matheussr/RomTrimmer/build/Makefile&quot;  VERBOSE=1 edit_cache' />
+					<CompileFile command='/usr/bin/gmake -j2 -f &quot;/home/matheussr/RomTrimmer/build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
+					<Clean command='/usr/bin/gmake -j2 -f &quot;/home/matheussr/RomTrimmer/build/Makefile&quot;  VERBOSE=1 clean' />
+					<DistClean command='/usr/bin/gmake -j2 -f &quot;/home/matheussr/RomTrimmer/build/Makefile&quot;  VERBOSE=1 clean' />
+					<AskRebuildNeeded command="$make -q -f $makefile $target" />
+					<SilentBuild command="$make -f $makefile $target &gt; $(CMD_NULL)" />
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option type="4" />
+				<Option compiler="gcc" />
+				<MakeCommands>
+					<Build command='/usr/bin/gmake -j2 -f &quot;/home/matheussr/RomTrimmer/build/Makefile&quot;  VERBOSE=1 rebuild_cache' />
+					<CompileFile command='/usr/bin/gmake -j2 -f &quot;/home/matheussr/RomTrimmer/build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
+					<Clean command='/usr/bin/gmake -j2 -f &quot;/home/matheussr/RomTrimmer/build/Makefile&quot;  VERBOSE=1 clean' />
+					<DistClean command='/usr/bin/gmake -j2 -f &quot;/home/matheussr/RomTrimmer/build/Makefile&quot;  VERBOSE=1 clean' />
+					<AskRebuildNeeded command="$make -q -f $makefile $target" />
+					<SilentBuild command="$make -f $makefile $target &gt; $(CMD_NULL)" />
+				</MakeCommands>
+			</Target>
+			<Target title="list_install_components">
+				<Option type="4" />
+				<Option compiler="gcc" />
+				<MakeCommands>
+					<Build command='/usr/bin/gmake -j2 -f &quot;/home/matheussr/RomTrimmer/build/Makefile&quot;  VERBOSE=1 list_install_components' />
+					<CompileFile command='/usr/bin/gmake -j2 -f &quot;/home/matheussr/RomTrimmer/build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
+					<Clean command='/usr/bin/gmake -j2 -f &quot;/home/matheussr/RomTrimmer/build/Makefile&quot;  VERBOSE=1 clean' />
+					<DistClean command='/usr/bin/gmake -j2 -f &quot;/home/matheussr/RomTrimmer/build/Makefile&quot;  VERBOSE=1 clean' />
+					<AskRebuildNeeded command="$make -q -f $makefile $target" />
+					<SilentBuild command="$make -f $makefile $target &gt; $(CMD_NULL)" />
+				</MakeCommands>
+			</Target>
+			<Target title="install">
+				<Option type="4" />
+				<Option compiler="gcc" />
+				<MakeCommands>
+					<Build command='/usr/bin/gmake -j2 -f &quot;/home/matheussr/RomTrimmer/build/Makefile&quot;  VERBOSE=1 install' />
+					<CompileFile command='/usr/bin/gmake -j2 -f &quot;/home/matheussr/RomTrimmer/build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
+					<Clean command='/usr/bin/gmake -j2 -f &quot;/home/matheussr/RomTrimmer/build/Makefile&quot;  VERBOSE=1 clean' />
+					<DistClean command='/usr/bin/gmake -j2 -f &quot;/home/matheussr/RomTrimmer/build/Makefile&quot;  VERBOSE=1 clean' />
+					<AskRebuildNeeded command="$make -q -f $makefile $target" />
+					<SilentBuild command="$make -f $makefile $target &gt; $(CMD_NULL)" />
+				</MakeCommands>
+			</Target>
+			<Target title="install/local">
+				<Option type="4" />
+				<Option compiler="gcc" />
+				<MakeCommands>
+					<Build command='/usr/bin/gmake -j2 -f &quot;/home/matheussr/RomTrimmer/build/Makefile&quot;  VERBOSE=1 install/local' />
+					<CompileFile command='/usr/bin/gmake -j2 -f &quot;/home/matheussr/RomTrimmer/build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
+					<Clean command='/usr/bin/gmake -j2 -f &quot;/home/matheussr/RomTrimmer/build/Makefile&quot;  VERBOSE=1 clean' />
+					<DistClean command='/usr/bin/gmake -j2 -f &quot;/home/matheussr/RomTrimmer/build/Makefile&quot;  VERBOSE=1 clean' />
+					<AskRebuildNeeded command="$make -q -f $makefile $target" />
+					<SilentBuild command="$make -f $makefile $target &gt; $(CMD_NULL)" />
+				</MakeCommands>
+			</Target>
+			<Target title="install/strip">
+				<Option type="4" />
+				<Option compiler="gcc" />
+				<MakeCommands>
+					<Build command='/usr/bin/gmake -j2 -f &quot;/home/matheussr/RomTrimmer/build/Makefile&quot;  VERBOSE=1 install/strip' />
+					<CompileFile command='/usr/bin/gmake -j2 -f &quot;/home/matheussr/RomTrimmer/build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;' />
+					<Clean command='/usr/bin/gmake -j2 -f &quot;/home/matheussr/RomTrimmer/build/Makefile&quot;  VERBOSE=1 clean' />
+					<DistClean command='/usr/bin/gmake -j2 -f &quot;/home/matheussr/RomTrimmer/build/Makefile&quot;  VERBOSE=1 clean' />
+					<AskRebuildNeeded command="$make -q -f $makefile $target" />
+					<SilentBuild command="$make -f $makefile $target &gt; $(CMD_NULL)" />
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="CMakeLists.txt">
+			<Option virtualFolder="CMake Files/" />
+		</Unit>
+		<Unit filename="src/ConfigManager.cpp">
+			<Option target="romtrimmer_core" />
+		</Unit>
+		<Unit filename="src/DatIntegration.cpp">
+			<Option target="romtrimmer_c" />
+		</Unit>
+		<Unit filename="src/LocalizationManager.cpp">
+			<Option target="romtrimmer_core" />
+		</Unit>
+		<Unit filename="src/Logger.cpp">
+			<Option target="romtrimmer_core" />
+		</Unit>
+		<Unit filename="src/PaddingAnalyzer.cpp">
+			<Option target="romtrimmer_core" />
+		</Unit>
+		<Unit filename="src/ReversePadding.cpp">
+			<Option target="romtrimmer_c" />
+		</Unit>
+		<Unit filename="src/RomDetector.cpp">
+			<Option target="romtrimmer_core" />
+		</Unit>
+		<Unit filename="src/RomTrimmer.cpp">
+			<Option target="romtrimmer_core" />
+		</Unit>
+		<Unit filename="src/SafetyValidator.cpp">
+			<Option target="romtrimmer_core" />
+		</Unit>
+		<Unit filename="src/ThreadPool.cpp">
+			<Option target="romtrimmer_core" />
+		</Unit>
+		<Unit filename="src/catch_amalgamated.cpp">
+			<Option target="romtrimmer_tests" />
+		</Unit>
+		<Unit filename="src/main.cpp">
+			<Option target="romtrimmer++" />
+		</Unit>
+		<Unit filename="src/romtrimmer_c.cpp">
+			<Option target="romtrimmer_c" />
+		</Unit>
+		<Unit filename="tests/test_basic.cpp">
+			<Option target="romtrimmer_tests" />
+		</Unit>
+		<Extensions />
+	</Project>
+</CodeBlocks_project_file>

@@ -1387,6 +1387,28 @@ bool RomTrimmer::extractRarArchive(const fs::path& archivePath, const fs::path& 
     return result == 0;
 }
 
+#ifdef _WIN32
+bool extractWithWindowsAPI(const fs::path& archivePath,
+                           const fs::path& extractPath,
+                           const std::string& type)
+{
+    std::string command;
+
+    if (type == "ZIP") {
+        command =
+            "powershell -Command \"Expand-Archive -Force '"
+            + archivePath.string() +
+            "' '" + extractPath.string() + "'\"";
+    } else {
+        return false;
+    }
+
+    int result = system(command.c_str());
+    return result == 0;
+}
+#endif
+
+
 // ==================== FUNÇÕES DE REZIP ====================
 
 bool RomTrimmer::rezipFile(const fs::path& trimmedPath) {
