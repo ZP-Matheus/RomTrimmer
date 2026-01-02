@@ -139,11 +139,19 @@ if (langInConfig == "unset") {
 
         // Verificar argumentos mínimos
         if (argc < 2) {
-            std::cout << TR("USAGE") << ": romtrimmer++ [OPTIONS]\n" << TR("TRY_HELP") << std::endl;
-            std::cout << "\n" << TR("QUICK_EXAMPLES") << ":\n"
-                      << "  romtrimmer++ -i game.gba\n"
-                      << "  romtrimmer++ -p roms/ -r -o trimmed/\n"
-                      << "  romtrimmer++ --help\n";
+                std::cout << TR("USAGE") << "\n";
+    std::cout << "  romtrimmer++ [OPTIONS] -i <arquivo>\n";
+    std::cout << "  romtrimmer++ [OPTIONS] -p <diretório>\n";
+    std::cout << "  romtrimmer++ -i roms.zip --compressed\n";
+    std::cout << "  romtrimmer++ -p downloads/ -e \"nds,gba,nes\"\n\n";
+    
+    std::cout << TR("EXAMPLES") << "\n";
+    std::cout << "  " << TR("EXAMPLE_TRIM_SINGLE") << "\n";
+    std::cout << "  " << TR("EXAMPLE_PROCESS_DIR") << "\n";
+    std::cout << "  " << TR("EXAMPLE_ANALYZE_ONLY") << "\n";
+    std::cout << "  Processar ZIP: romtrimmer++ -i roms.zip --compressed\n";
+    std::cout << "  Extensões personalizadas: romtrimmer++ -p roms/ -e \"iso,bin,img\"\n\n"
+      << "  romtrimmer++ --help\n";
             return EXIT_SUCCESS;
         }
 

@@ -149,6 +149,8 @@ void LocalizationManager::loadTranslations() {
         {"HEADER_INTEGRITY_COMPROMISED", "ROM header integrity would be compromised"},
         {"SUGGEST_BACKUP_AND_VERIFY", "Create backup and verify ROM functionality after trim"},
         {"RISK_LARGE_CUT", "Large cut ("},
+    {"REZIP_STATISTICS", "Recompression Statistics"},
+    {"REZIP_ENABLED", "Recompression enabled"},
         {"RISK_BELOW_RECOMMENDED", "Size below recommended minimum"},
         {"RISK_STRUCTURE_CONFLICT", "Cut would affect known data structures"},
         {"RECOMMENDATION_LOW_RISK", "Low risk operation, proceed normally"},
@@ -175,7 +177,18 @@ void LocalizationManager::loadTranslations() {
         {"SUCCESSFULLY_TRIMMED", "Successfully trimmed"},
         {"NO_CHANGES", "No changes made"},
         {"SUPPORTED_FORMATS", "Supported formats"},
-        {"SAFETY_NOTES", "Safety notes"}
+        {"SAFETY_NOTES", "Safety notes"},
+        // Adicionar estas traduções em cada língua:
+
+// Em todas as seções de tradução (EN, PT, ES, etc.), adicione:
+{"EXTENSIONS_HELP", "Custom file extensions (comma-separated)"},
+{"COMPRESSED_HELP", "Process compressed files (ZIP, 7Z, RAR)"},
+{"EXTRACT_ONLY_HELP", "Extract compressed files without processing"},
+{"EXTRACT_DIR_HELP", "Temporary extraction directory"},
+{"EXTRACTING_FILE", "Extracting: "},
+{"EXTRACTION_FAILED", "Failed to extract: "},
+{"EXTRACTION_SUCCESS", "Successfully extracted: "},
+{"NO_EXTRACTION_TOOLS", "No extraction tools found. Install 7z, unzip or unrar"},
     };
 
     // =========================
@@ -202,6 +215,8 @@ void LocalizationManager::loadTranslations() {
         {"HELP_HELP", "Mostrar esta mensagem de ajuda"},
         {"VERSION_HELP", "Mostrar informação de versão"},
         {"VERBOSE_HELP", "Saída detalhada"},
+        {"REZIP_STATISTICS", "Estatísticas de Recompactação"},
+    {"REZIP_ENABLED", "Recompactação habilitada"},
         {"TRY_HELP", "Tente 'romtrimmer++ --help' para mais informações."},
         {"CRITICAL_ERROR", "Erro crítico: "},
         {"A_POWERFUL_ROM_TRIMMING_UTILITY", "Um utilitário poderoso para trim de ROMs"},
