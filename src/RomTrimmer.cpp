@@ -1,5 +1,6 @@
 #include "RomTrimmer.hpp"
 #include "Localization.hpp"
+#include <zlib.h>
 #include "ValidationResult.hpp" // ou outro header onde a struct é definida
 #include <iostream>
 #include <fstream>

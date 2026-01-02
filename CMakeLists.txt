@@ -26,6 +26,8 @@ option(WITH_UCON64_INTEGRATION "Enable uCon64 integration" OFF)
 # ===============================
 find_package(OpenSSL REQUIRED)
 
+
+
 # ===============================
 # Core Library
 # ===============================
@@ -87,14 +89,22 @@ if(BUILD_C_LIBRARY)
         src/DatIntegration.cpp
     )
 
+    target_include_directories(romtrimmer_c
+        PRIVATE
+            ${ZLIB_INCLUDE_DIRS}
+    )
+
     target_link_libraries(romtrimmer_c
         PRIVATE
             romtrimmer_core
+            ${ZLIB_LIBRARIES}
     )
 
     install(FILES include/romtrimmer_c.h DESTINATION include)
     install(TARGETS romtrimmer_c DESTINATION lib)
 endif()
+
+
 
 # ===============================
 # Testes
