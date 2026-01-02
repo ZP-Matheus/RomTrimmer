@@ -1,6 +1,7 @@
 // DatIntegration.cpp
 #include "DatIntegration.hpp"
 #include "ChecksumVerifier.hpp"
+#include <zlib.h>
 #include <fstream>
 #include <sstream>
 #include <regex>
