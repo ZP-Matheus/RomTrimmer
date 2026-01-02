@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.15)
 
 project(romtrimmerpp
     VERSION 1.0
-    LANGUAGES CXX
+    LANGUAGES C CXX
 )
 
 # ===============================
@@ -22,11 +22,30 @@ option(BUILD_TESTS       "Build tests" ON)
 option(WITH_UCON64_INTEGRATION "Enable uCon64 integration" OFF)
 
 # ===============================
-# Dependências
+# Dependências externas
 # ===============================
 find_package(OpenSSL REQUIRED)
 
+# ===============================
+# ZLIB (vendorizada)
+# ===============================
+add_library(zlib STATIC
+    third_party/zlib/adler32.c
+    third_party/zlib/crc32.c
+    third_party/zlib/deflate.c
+    third_party/zlib/inffast.c
+    third_party/zlib/inflate.c
+    third_party/zlib/inftrees.c
+    third_party/zlib/trees.c
+    third_party/zlib/zutil.c
+)
 
+target_include_directories(zlib
+    PUBLIC
+        ${PROJECT_SOURCE_DIR}/third_party/zlib
+)
+
+target_compile_definitions(zlib PRIVATE ZLIB_CONST)
 
 # ===============================
 # Core Library
@@ -50,16 +69,41 @@ target_include_directories(romtrimmer_core
 target_link_libraries(romtrimmer_core
     PUBLIC
         OpenSSL::Crypto
+        zlib
 )
 
 if (CMAKE_CXX_COMPILER_ID MATCHES "Clang|GNU")
     target_compile_options(romtrimmer_core PRIVATE -Wall -Wextra -Wpedantic)
 endif()
 
-# uCon64 opcional
 if(WITH_UCON64_INTEGRATION)
     target_compile_definitions(romtrimmer_core PRIVATE WITH_UCON64=1)
     target_sources(romtrimmer_core PRIVATE src/Ucon64Integration.cpp)
+endif()
+
+# ===============================
+# C Interface Library
+# ===============================
+if(BUILD_C_LIBRARY)
+    add_library(romtrimmer_c SHARED
+        src/romtrimmer_c.cpp
+        src/ReversePadding.cpp
+        src/DatIntegration.cpp
+    )
+
+    target_include_directories(romtrimmer_c
+        PUBLIC
+            ${PROJECT_SOURCE_DIR}/include
+    )
+
+    target_link_libraries(romtrimmer_c
+        PRIVATE
+            romtrimmer_core
+            zlib
+    )
+
+    install(FILES include/romtrimmer_c.h DESTINATION include)
+    install(TARGETS romtrimmer_c DESTINATION lib)
 endif()
 
 # ===============================
@@ -80,33 +124,6 @@ if(BUILD_CLI_TOOL)
 endif()
 
 # ===============================
-# C Interface Library
-# ===============================
-if(BUILD_C_LIBRARY)
-    add_library(romtrimmer_c SHARED
-        src/romtrimmer_c.cpp
-        src/ReversePadding.cpp
-        src/DatIntegration.cpp
-    )
-
-    target_include_directories(romtrimmer_c
-        PRIVATE
-            ${ZLIB_INCLUDE_DIRS}
-    )
-
-    target_link_libraries(romtrimmer_c
-        PRIVATE
-            romtrimmer_core
-            ${ZLIB_LIBRARIES}
-    )
-
-    install(FILES include/romtrimmer_c.h DESTINATION include)
-    install(TARGETS romtrimmer_c DESTINATION lib)
-endif()
-
-
-
-# ===============================
 # Testes
 # ===============================
 if(BUILD_TESTS)
@@ -121,10 +138,6 @@ if(BUILD_TESTS)
         PRIVATE
             romtrimmer_core
     )
-
-    if(ANDROID)
-        target_link_libraries(romtrimmer_tests PRIVATE log)
-    endif()
 
     add_test(NAME basic_tests COMMAND romtrimmer_tests)
 endif()
