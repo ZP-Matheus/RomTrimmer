@@ -1,5 +1,6 @@
 // romtrimmer_c.cpp - C++ implementation of C interface
 #include "romtrimmer_c.h"
+#include <zlib.h>
 #include "RomTrimmer.hpp"
 #include "PaddingAnalyzer.hpp"
 #include "RomDetector.hpp"
