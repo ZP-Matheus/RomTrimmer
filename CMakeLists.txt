@@ -15,37 +15,17 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 # ===============================
 # Opções de build
 # ===============================
-option(BUILD_SHARED_LIBS "Build shared libraries" OFF)
+option(BUILD_SHARED_LIBS "Build shared libraries" ON)
 option(BUILD_C_LIBRARY   "Build C interface library" ON)
 option(BUILD_CLI_TOOL    "Build CLI tool" ON)
 option(BUILD_TESTS       "Build tests" ON)
-option(WITH_UCON64_INTEGRATION "Enable uCon64 integration" OFF)
+option(WITH_UCON64_INTEGRATION "Enable uCon64 integration" ON)
 
 # ===============================
 # Dependências externas
 # ===============================
 find_package(OpenSSL REQUIRED)
-
-# ===============================
-# ZLIB (vendorizada)
-# ===============================
-add_library(zlib STATIC
-    third_party/zlib/adler32.c
-    third_party/zlib/crc32.c
-    third_party/zlib/deflate.c
-    third_party/zlib/inffast.c
-    third_party/zlib/inflate.c
-    third_party/zlib/inftrees.c
-    third_party/zlib/trees.c
-    third_party/zlib/zutil.c
-)
-
-target_include_directories(zlib
-    PUBLIC
-        ${PROJECT_SOURCE_DIR}/third_party/zlib
-)
-
-target_compile_definitions(zlib PRIVATE ZLIB_CONST)
+find_package(ZLIB REQUIRED)  # <-- Aqui a mágica
 
 # ===============================
 # Core Library
@@ -69,7 +49,7 @@ target_include_directories(romtrimmer_core
 target_link_libraries(romtrimmer_core
     PUBLIC
         OpenSSL::Crypto
-        zlib
+        ZLIB::ZLIB  # <-- Usando o zlib do sistema
 )
 
 if (CMAKE_CXX_COMPILER_ID MATCHES "Clang|GNU")
@@ -99,7 +79,7 @@ if(BUILD_C_LIBRARY)
     target_link_libraries(romtrimmer_c
         PRIVATE
             romtrimmer_core
-            zlib
+            ZLIB::ZLIB  # <-- Aqui também
     )
 
     install(FILES include/romtrimmer_c.h DESTINATION include)
@@ -137,6 +117,7 @@ if(BUILD_TESTS)
     target_link_libraries(romtrimmer_tests
         PRIVATE
             romtrimmer_core
+            log
     )
 
     add_test(NAME basic_tests COMMAND romtrimmer_tests)
